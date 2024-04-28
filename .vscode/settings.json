@@ -2,6 +2,7 @@
   "python.analysis.autoImportCompletions": true,
   "cSpell.words": [
     "Salam",
-    "simplejwt"
+    "simplejwt",
+    "todos"
   ]
 }
