@@ -41,3 +41,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["name", "email", "profile_picture", "gender", 'status']
+        read_only_fields = ['status']
+

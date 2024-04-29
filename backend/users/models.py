@@ -15,7 +15,7 @@ class MyUserManager(BaseUserManager):
 class User(AbstractUser):
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
-    profile_picture = models.ImageField(upload_to="users/", blank=True, null=True)
+    profile_picture = models.ImageField(upload_to="media/users/", blank=True, null=True)
     gender = models.CharField(
         max_length=20, default=Gender_Choices.male, choices=Gender_Choices.CHOICES
     )

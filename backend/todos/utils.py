@@ -3,8 +3,20 @@ class TodoChoices:
     IP = "ip"
     C = "c"
 
-    STATUS_CHOICES = [
+    CHOICES = [
         ("p", "Pending"),
         ("ip", "In Progress"),
         ("c", "Completed"),
+    ]
+
+
+class PriorityChoices:
+    L = "l"
+    M = "m"
+    H = "h"
+
+    CHOICES = [
+        ("l", "Low"),
+        ("m", "Medium"),
+        ("h", "High"),
     ]

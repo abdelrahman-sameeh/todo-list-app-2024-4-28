@@ -6,7 +6,11 @@ from rest_framework.response import Response
 from rest_framework import generics
 from users.choices import Status_Choices
 from users.models import User
-from users.serializers import ChangePasswordSerializer, RegisterSerializer
+from users.serializers import (
+    ChangePasswordSerializer,
+    RegisterSerializer,
+    UserSerializer,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password, check_password
@@ -29,9 +33,6 @@ def verification_account(request):
 
     code = str(request.data.get("verified_code"))
     user: User = request.user
-
-    print(user.code)
-    print(user.status)
 
     if user.status != Status_Choices.new or not user.code:
         return Response(
@@ -146,3 +147,28 @@ def reset_password_with_code(request):
     user.save()
 
     return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
+
+
+class RetrieveUpdateDestroyLoggedUser(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+            return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        # Check if 'email' field is present in the request data
+        email = request.data.get('email')
+        if email is None:
+            # If 'email' is not present, use the existing email of the instance
+            email = instance.email
+
+        # Update the 'email' attribute of the instance
+        instance.email = email
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+retrieve_update_destroy_logged_user = RetrieveUpdateDestroyLoggedUser.as_view()
