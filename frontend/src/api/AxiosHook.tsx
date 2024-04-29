@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 type MethodType = "GET" | "POST" | "PUT" | "DELETE";
 type ContentType = 'application/json' | 'multipart/form-data';
 
-export const AxiosHook = async (authTokens: any, url: string, method: MethodType, data: any, contentType: ContentType = 'application/json', timeout: number = 10 * 1000): Promise<any> => {
+export const AxiosHook = async (authTokens: any, url: string, method: MethodType, data: any, contentType: ContentType = 'application/json', timeout: number = 60 * 1000): Promise<any> => {
 
   const token = authTokens?.access
 
@@ -25,6 +25,6 @@ export const AxiosHook = async (authTokens: any, url: string, method: MethodType
     const response = await axios(config);
     return response;
   } catch (error: any) {
-    return error
+    return error.response
   }
 }
