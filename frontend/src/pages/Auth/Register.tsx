@@ -30,9 +30,6 @@ const validation = (name: string, email: string, password: string, passwordConfi
     newErrors.set('passwordConfirm', 'PasswordConfirm must be equal Password')
   }
 
-  console.log(newErrors);
-
-
   if (newErrors.size) {
     setErrors(newErrors)
     return false
