@@ -4,5 +4,6 @@ export const API_ENDPOINTS = {
   register: `${BackendUrl}/register/`,
   login: `${BackendUrl}/token/`,
   getLoggedUser: `${BackendUrl}/user/`,
-  verifiedAccount: `${BackendUrl}/verification-account/`
+  verifiedAccount: `${BackendUrl}/verification-account/`,
+  changePassword: `${BackendUrl}/change-password/`,
 }

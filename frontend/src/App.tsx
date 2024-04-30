@@ -6,6 +6,7 @@ import { Login } from "./pages/Auth/Login";
 import { Todos } from "./pages/todos/Todos";
 import { IsVerifiedAccountHook } from "./hooks/IsVerifiedAccountHook";
 import { VerifiedAccount } from "./pages/Auth/VerifiedAccount";
+import { ChangePassword } from "./pages/Auth/ChangePassword";
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
         </Route>
 
         <Route path={'/verified'} element={<VerifiedAccount />} />
+        <Route path={'/change-password'} element={<ChangePassword />} />
         
 
       </Routes>
