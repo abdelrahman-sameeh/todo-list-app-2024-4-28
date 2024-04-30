@@ -10,14 +10,14 @@ class Todo(models.Model):
     status = models.CharField(
         max_length=20,
         choices=TodoChoices.CHOICES,
-        default=TodoChoices.P,
+        default=TodoChoices.pending,
         null=True,
         blank=True,
     )
     priority = models.CharField(
         max_length=20,
         choices=PriorityChoices.CHOICES,
-        default=PriorityChoices.H,
+        default=PriorityChoices.high,
         null=True,
         blank=True,
     )

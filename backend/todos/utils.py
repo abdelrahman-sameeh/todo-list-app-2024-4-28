@@ -1,22 +1,22 @@
 class TodoChoices:
-    P = "p"
-    IP = "ip"
-    C = "c"
+    pending = "P"
+    in_progress = "IP"
+    complete = "C"
 
     CHOICES = [
-        ("p", "Pending"),
-        ("ip", "In Progress"),
-        ("c", "Completed"),
+        ("P", "Pending"),
+        ("IP", "In Progress"),
+        ("C", "Completed"),
     ]
 
 
 class PriorityChoices:
-    L = "l"
-    M = "m"
-    H = "h"
+    low = "L"
+    medium = "M"
+    high = "H"
 
     CHOICES = [
-        ("l", "Low"),
-        ("m", "Medium"),
-        ("h", "High"),
+        ("L", "Low"),
+        ("M", "Medium"),
+        ("H", "High"),
     ]

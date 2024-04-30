@@ -8,8 +8,7 @@ class Gender_Choices:
 class Status_Choices:
     new = "N"
     verified = "V"
-    approved = "A"
     denied = "D"
 
-    CHOICES = [("N", "New"), ("V", "Verified"), ("A", "Approved"), ("D", "Denied")]
+    CHOICES = [("N", "New"), ("V", "Verified"), ("D", "Denied")]
 
