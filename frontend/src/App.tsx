@@ -15,15 +15,12 @@ export function App() {
         <Route path={'/'} element={<Home />} />
         <Route path={'/register'} element={<Register />} />
         <Route path={'/login'} element={<Login />} />
-
-        <Route element={<IsVerifiedAccountHook />} >
-          <Route path={'/todos'} element={<Todos />} />
-        </Route>
-
         <Route path={'/verified'} element={<VerifiedAccount />} />
         <Route path={'/change-password'} element={<ChangePassword />} />
         
-
+        <Route element={<IsVerifiedAccountHook />} >
+          <Route path={'/todos'} element={<Todos />} />
+        </Route>
       </Routes>
 
       <ToastContainer />
