@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 import { isValidEmail } from '../../utils/validation'
 import { AxiosHook } from '../../api/AxiosHook'
 import { API_ENDPOINTS } from '../../api/EndPoints'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { notify } from '../../components/utils/Notify'
 
 
@@ -69,16 +69,16 @@ export const Register = () => {
     }
 
     setLoading(true)
-      const response = await AxiosHook(null, API_ENDPOINTS.register, 'POST', data)
-      if (response.status === 201) {
-        navigate('/login')
-        notify('Account created successfully', 'success')
-      }else if (response?.status==400 && response?.data && response?.data?.email[0]?.startsWith('user with this email already exists.') ){
-        notify('This email already used', 'error')
-        setErrors((prev)=>(new Map(errors).set('email', 'This email already used')))
-      }else{
-        notify('Something went wrong', 'error')
-      }
+    const response = await AxiosHook(null, API_ENDPOINTS.register, 'POST', data)
+    if (response.status === 201) {
+      navigate('/login')
+      notify('Account created successfully', 'success')
+    } else if (response?.status == 400 && response?.data && response?.data?.email[0]?.startsWith('user with this email already exists.')) {
+      notify('This email already used', 'error')
+      setErrors((prev) => (new Map(errors).set('email', 'This email already used')))
+    } else {
+      notify('Something went wrong', 'error')
+    }
     setLoading(false)
   }
 
@@ -161,6 +161,9 @@ export const Register = () => {
           </Button>
         </form>
       </Paper>
+      <Link style={{ marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/login'} > Have an account </Link>
+      <Link style={{ display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/forget-password'} > Forget password </Link>
+
     </Container>
   )
 }

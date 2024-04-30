@@ -6,4 +6,7 @@ export const API_ENDPOINTS = {
   getLoggedUser: `${BackendUrl}/user/`,
   verifiedAccount: `${BackendUrl}/verification-account/`,
   changePassword: `${BackendUrl}/change-password/`,
+  forgetPassword: `${BackendUrl}/forgot-password/`,
+  resetPassword: `${BackendUrl}/reset-password/`,
+
 }
