@@ -9,4 +9,7 @@ export const API_ENDPOINTS = {
   forgetPassword: `${BackendUrl}/forgot-password/`,
   resetPassword: `${BackendUrl}/reset-password/`,
 
+  // list todos
+  getTodos: (qs: string) => `${BackendUrl}/todos/${qs}`,
+
 }

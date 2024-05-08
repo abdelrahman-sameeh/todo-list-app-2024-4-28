@@ -2,6 +2,7 @@
   "python.analysis.autoImportCompletions": true,
   "cSpell.words": [
     "corsheaders",
+    "filterset",
     "Salam",
     "simplejwt",
     "todos"

@@ -69,7 +69,7 @@ export const Register = () => {
     }
 
     setLoading(true)
-    const response = await AxiosHook(null, API_ENDPOINTS.register, 'POST', data)
+    const response = await AxiosHook(false, API_ENDPOINTS.register, 'POST', data)
     if (response.status === 201) {
       navigate('/login')
       notify('Account created successfully', 'success')

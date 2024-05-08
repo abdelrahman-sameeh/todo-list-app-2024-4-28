@@ -64,7 +64,7 @@ export const ResetPassword = () => {
 
     setLoading(true)
 
-    const response = await AxiosHook(null, API_ENDPOINTS.resetPassword, 'POST', data)
+    const response = await AxiosHook(false, API_ENDPOINTS.resetPassword, 'POST', data)
 
     if (response.status === 200) {
       notify('Password updated successfully', 'success')

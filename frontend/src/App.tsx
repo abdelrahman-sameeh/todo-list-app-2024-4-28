@@ -9,10 +9,13 @@ import { VerifiedAccount } from "./pages/Auth/VerifiedAccount";
 import { ChangePassword } from "./pages/Auth/ChangePassword";
 import { ForgetPassword } from "./pages/Auth/ForgetPassword";
 import { ResetPassword } from "./pages/Auth/ResetPassword";
+import { Navbar } from "./components/utils/Navbar";
 
 export function App() {
   return (
     <div>
+      <Navbar />
+
       <Routes>
         <Route path={'/'} element={<Home />} />
         <Route path={'/register'} element={<Register />} />

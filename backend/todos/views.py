@@ -1,14 +1,21 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions
 from todos.permissions import IsOwnTodo
 from users.utils import generate_random_string
 from todos.models import Todo
 from todos import serializers
-from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+
+class CustomPagination(PageNumberPagination):
+    page_size=10
+    page_query_param='page'
 
 
 class ListCreateTodo(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.ListCreateTodoSerializer
+    pagination_class= CustomPagination
+    filterset_fields = ['status']
+    search_fields=['title', 'description']
 
     def get_queryset(self):
         return Todo.objects.filter(user=self.request.user)

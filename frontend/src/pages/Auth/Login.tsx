@@ -54,11 +54,11 @@ export const Login = () => {
     }
 
     setLoading(true)
-    const response = await AxiosHook(null, API_ENDPOINTS.login, 'POST', data)
+    const response = await AxiosHook(false, API_ENDPOINTS.login, 'POST', data)
     if (response.status === 200) {
       notify('logged in successfully', 'success')
       localStorage.setItem('authTokens', JSON.stringify(response?.data))
-      navigate('/todos')
+      window.location.href = '/todos'
     } else if (response.status == 401) {
       notify('Email or Password is incorrect', 'error')
     } else {
@@ -104,7 +104,7 @@ export const Login = () => {
           </Button>
         </form>
       </Paper>
-      <Link style={{marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px'}} to={'/register'} > Don't have an account </Link>
+      <Link style={{ marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/register'} > Don't have an account </Link>
 
     </Container>
   )

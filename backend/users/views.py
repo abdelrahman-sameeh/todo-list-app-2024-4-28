@@ -153,7 +153,7 @@ class RetrieveUpdateDestroyLoggedUser(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-            return self.request.user
+        return self.request.user
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()

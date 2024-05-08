@@ -39,7 +39,6 @@ export const ChangePassword = () => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Map<string, string>>(new Map())
 
-  const { authTokens }: any = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: any) => {
@@ -54,7 +53,7 @@ export const ChangePassword = () => {
       new_password: newPassword
     }
     setLoading(true)
-    const response = await AxiosHook(authTokens, API_ENDPOINTS.changePassword, 'POST', data)
+    const response = await AxiosHook(true, API_ENDPOINTS.changePassword, 'POST', data)
     if (response.status == 200) {
       notify('Password updated successfully', 'success')
       navigate('/')

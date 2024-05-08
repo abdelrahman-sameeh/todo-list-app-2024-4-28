@@ -48,7 +48,7 @@ export const ForgetPassword = () => {
     }
 
     setLoading(true)
-    const response = await AxiosHook(null, API_ENDPOINTS.forgetPassword, 'POST', data)
+    const response = await AxiosHook(false, API_ENDPOINTS.forgetPassword, 'POST', data)
     if (response.status == 200) {
       localStorage.setItem('email', email)
       notify('Reset code successfully sent.', 'success')

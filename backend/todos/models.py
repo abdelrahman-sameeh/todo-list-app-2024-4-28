@@ -24,4 +24,5 @@ class Todo(models.Model):
     uuid = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.user.email}"
+

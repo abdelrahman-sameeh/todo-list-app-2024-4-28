@@ -12,8 +12,6 @@ export const VerifiedAccount = () => {
 
   const navigate = useNavigate()
 
-  const { authTokens }: any= useAuth()
-
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
@@ -21,7 +19,7 @@ export const VerifiedAccount = () => {
       verified_code: verifiedCode
     }
     setLoading(true)
-    const response = await AxiosHook(authTokens, API_ENDPOINTS.verifiedAccount, 'POST', data)
+    const response = await AxiosHook(true, API_ENDPOINTS.verifiedAccount, 'POST', data)
 
     if (response.status === 200) {
       navigate('/todos')

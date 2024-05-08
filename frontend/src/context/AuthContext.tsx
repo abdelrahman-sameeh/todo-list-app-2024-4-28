@@ -1,14 +1,28 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { AxiosHook } from "../api/AxiosHook";
+import { API_ENDPOINTS } from "../api/EndPoints";
 
 const AuthContext = createContext({});
 
+
 export const AuthProvider = ({ children }: any) => {
   const [authTokens, setAuthTokens] = useState(null);
+  const [user, setUser] = useState({})
+
+  const getUser = async () => {
+    const response = await AxiosHook(true, API_ENDPOINTS.getLoggedUser, 'GET', {})
+    if (response.status == 200) {
+      setUser(response.data)
+    }
+  }
+  
 
   useEffect(() => {
     const storedTokens = localStorage.getItem('authTokens');
     if (storedTokens) {
-      setAuthTokens(JSON.parse(storedTokens));
+      const tokens = JSON.parse(storedTokens)
+      setAuthTokens(tokens);
+      getUser()
     }
   }, []);
 
@@ -18,7 +32,7 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authTokens, clearTokens }}>
+    <AuthContext.Provider value={{ authTokens, clearTokens, setAuthTokens, user }}>
       {children}
     </AuthContext.Provider>
   );
