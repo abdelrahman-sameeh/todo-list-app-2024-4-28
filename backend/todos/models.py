@@ -5,8 +5,8 @@ from users.models import User
 
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True)
-    title = models.CharField(max_length=30, null=True, blank=True)
-    description = models.TextField(max_length=500, null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(max_length=4000, null=True, blank=True)
     status = models.CharField(
         max_length=20,
         choices=TodoChoices.CHOICES,
