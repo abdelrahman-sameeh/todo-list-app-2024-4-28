@@ -162,8 +162,6 @@ export const Register = () => {
         </form>
       </Paper>
       <Link style={{ marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/login'} > Have an account </Link>
-      <Link style={{ display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/forget-password'} > Forget password </Link>
-
     </Container>
   )
 }

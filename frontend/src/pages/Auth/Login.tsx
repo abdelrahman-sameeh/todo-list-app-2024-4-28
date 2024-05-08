@@ -104,6 +104,7 @@ export const Login = () => {
           </Button>
         </form>
       </Paper>
+      <Link style={{ marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/forget-password'} > Forget password </Link>
       <Link style={{ marginTop: '10px', display: 'block', textDecoration: 'none', color: '#1976d2', fontWeight: 'bold', textAlign: 'center', fontSize: '20px' }} to={'/register'} > Don't have an account </Link>
 
     </Container>
