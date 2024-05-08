@@ -6,19 +6,22 @@ import { TodoCartComp } from '../../components/todos/TodoCartComp';
 import { AxiosHook } from '../../api/AxiosHook';
 import { API_ENDPOINTS } from '../../api/EndPoints';
 import { useDebounce } from '../../utils/debounce';
+import { useNavigate } from 'react-router-dom';
+import { CreateUpdateTodoDialog } from '../../components/todos/CreateUpdateTodoDialog';
+import { DeleteTodoDialog } from '../../components/todos/DeleteTodoDialog';
 
 const PAGE_COUNT = 10
 
 export interface TodoInterface {
-  description: string;
-  priority: string;
-  status: string;
-  title: string;
-  user: any;
-  uuid: any;
+  description?: string;
+  priority?: string;
+  status?: string;
+  title?: string;
+  user?: any;
+  uuid?: any;
 }
 
-type todoStatusType = 'P' | 'IP' | 'C'
+export type todoStatusType = 'P' | 'IP' | 'C'
 
 
 
@@ -45,6 +48,12 @@ export const Todos = () => {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search);
 
+  const [method, setMethod] = useState<"create" | 'update'>('create')
+  const [targetTodo, setTargetTodo] = useState<TodoInterface>({})
+
+  const [createUpdateOpenDialog, setCreateUpdateOpenDialog] = useState<boolean>(false)
+  const [deleteOpenDialog, setDeleteOpenDialog] = useState<boolean>(false)
+
 
   const getTodos = async () => {
     setLoading(true)
@@ -53,7 +62,7 @@ export const Todos = () => {
       setTodos(response?.data?.results)
       if (response?.data?.count) {
         setPagesCount(Math.ceil(+response?.data?.count / PAGE_COUNT));
-      }else{
+      } else {
         setPagesCount(1);
       }
     }
@@ -77,6 +86,8 @@ export const Todos = () => {
     }
   };
 
+  console.log(todos);
+  
 
 
   return (
@@ -111,7 +122,11 @@ export const Todos = () => {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '15px' }} >
         <Typography variant='h5'  > Todos </Typography>
-        <Button variant='contained' > Create New Todo </Button>
+        <Button onClick={() => {
+          setCreateUpdateOpenDialog(true)
+          setMethod('create')
+          setTargetTodo({})
+        }} variant='contained' > Create New Todo </Button>
       </div>
 
 
@@ -124,12 +139,18 @@ export const Todos = () => {
             </div>
             :
             todos?.map((todo: TodoInterface) =>
-              <TodoCartComp key={todo.uuid} todo={todo} />
+              <TodoCartComp
+                setMethod={setMethod}
+                setTargetTodo={setTargetTodo}
+                setCreateUpdateOpenDialog={setCreateUpdateOpenDialog}
+                key={todo?.uuid}
+                todo={todo}
+                setDeleteOpenDialog={setDeleteOpenDialog}
+              />
             )
         }
 
       </Paper>
-
 
       {
         pagesCount > 1 &&
@@ -140,6 +161,26 @@ export const Todos = () => {
         </Box>
       }
 
+      <CreateUpdateTodoDialog
+        open={createUpdateOpenDialog}
+        setCreateUpdateOpenDialog={setCreateUpdateOpenDialog}
+        setTodos={setTodos}
+        status={status}
+        method={method}
+        targetTodo={targetTodo}
+        todos={todos}
+        setTargetTodo={setTargetTodo}
+        setMethod={setMethod}
+      />
+
+      <DeleteTodoDialog
+        open={deleteOpenDialog}
+        setDeleteOpenDialog={setDeleteOpenDialog}
+        setTodos={setTodos}
+        targetTodo={targetTodo}
+        todos={todos}
+        setTargetTodo={setTargetTodo}
+      />
 
     </Container>
   )

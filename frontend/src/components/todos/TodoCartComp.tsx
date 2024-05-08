@@ -9,7 +9,6 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button } from '@mui/material';
-import { TodoInterface } from '../../pages/todos/Todos';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -22,7 +21,7 @@ const todoStatus: any = {
 }
 
 
-const todoPriority: any = {
+export const todoPriority: any = {
   "L": 'Low',
   "M": 'Medium',
   'H': 'High'
@@ -39,7 +38,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export function TodoCartComp({ todo }: { todo: TodoInterface }) {
+type TodoCartPropsType = {
+  todo: any,
+  setTargetTodo: any,
+  setCreateUpdateOpenDialog: any
+  setMethod: any
+  setDeleteOpenDialog: any
+}
+
+export function TodoCartComp({ todo, setTargetTodo, setCreateUpdateOpenDialog, setMethod, setDeleteOpenDialog }: TodoCartPropsType) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -53,8 +60,15 @@ export function TodoCartComp({ todo }: { todo: TodoInterface }) {
           title={todo.title}
         />
         <div>
-          <Button variant='outlined' > Update </Button>
-          <Button variant='outlined' color='error' sx={{ ml: 1 }} > Delete </Button>
+          <Button onClick={() => {
+            setTargetTodo(todo)
+            setCreateUpdateOpenDialog(true)
+            setMethod('update')
+          }} variant='outlined' > Update </Button>
+          <Button onClick={() => {
+            setTargetTodo(todo)
+            setDeleteOpenDialog(true)
+          }} variant='outlined' color='error' sx={{ ml: 1 }} > Delete </Button>
         </div>
       </div>
       <CardContent>
@@ -76,7 +90,7 @@ export function TodoCartComp({ todo }: { todo: TodoInterface }) {
         <CardContent>
           <Typography paragraph>Description:</Typography>
           <Typography paragraph>
-            {todo.description}
+            {todo?.description}
           </Typography>
         </CardContent>
       </Collapse>

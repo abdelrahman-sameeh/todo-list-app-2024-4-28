@@ -10,6 +10,7 @@ import { ChangePassword } from "./pages/Auth/ChangePassword";
 import { ForgetPassword } from "./pages/Auth/ForgetPassword";
 import { ResetPassword } from "./pages/Auth/ResetPassword";
 import { Navbar } from "./components/utils/Navbar";
+import { CreateTodo } from "./pages/todos/CreateTodo";
 
 export function App() {
   return (
@@ -27,6 +28,7 @@ export function App() {
 
         <Route element={<IsVerifiedAccountHook />} >
           <Route path={'/todos'} element={<Todos />} />
+
         </Route>
       </Routes>
 

@@ -11,5 +11,7 @@ export const API_ENDPOINTS = {
 
   // list todos
   getTodos: (qs: string) => `${BackendUrl}/todos/${qs}`,
+  createTodo: `${BackendUrl}/todos/`,
+  updateDeleteTodo: (id: any) => `${BackendUrl}/todos/${id}/`
 
 }
