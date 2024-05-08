@@ -17,7 +17,7 @@ class ListCreateTodoSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Title is required")
         if title and len(title) <= 1:
             raise serializers.ValidationError("Too short title")
-        if not description or len(description) <= 3:
+        if not description or len(description) < 3:
             raise serializers.ValidationError("Too short description")
 
         return data
