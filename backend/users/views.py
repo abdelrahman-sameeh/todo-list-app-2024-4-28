@@ -166,6 +166,9 @@ class RetrieveUpdateDestroyLoggedUser(generics.RetrieveUpdateDestroyAPIView):
             # If 'email' is not present, use the existing email of the instance
             email = instance.email
 
+        # if "profile_picture" in request.data and request.data.get('profile_picture') == '':
+        #     instance.profile_picture = None
+
         # Update the 'email' attribute of the instance
         instance.email = email
         self.perform_update(serializer)

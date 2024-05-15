@@ -82,7 +82,7 @@ export const Todos = () => {
     if (newValue) {
       setStatus(newValue);
     } else {
-      setStatus('P')
+      setStatus(status)
     }
   };
 

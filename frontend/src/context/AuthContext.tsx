@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState({})
 
   const getUser = async () => {
-    const response = await AxiosHook(true, API_ENDPOINTS.getLoggedUser, 'GET', {})
+    const response = await AxiosHook(true, API_ENDPOINTS.getUpdateLoggedUser, 'GET', {})
     if (response.status == 200) {
       setUser(response.data)
     }

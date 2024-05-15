@@ -34,12 +34,6 @@ export const Navbar = () => {
                 }}>
                   Profile
                 </MenuItem>
-                <MenuItem onClick={() => {
-                  popupState.close()
-                  navigate('/todos')
-                }}>
-                  My Todos
-                </MenuItem>
                 {
                   authTokens?.access ?
                     <MenuItem onClick={() => {

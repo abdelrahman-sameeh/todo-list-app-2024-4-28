@@ -9,7 +9,7 @@ export const IsVerifiedAccountHook = () => {
   const [loading, setLoading] = useState(true)
 
   const run = async () => {
-    const response = await AxiosHook(true, API_ENDPOINTS.getLoggedUser, 'GET', null)
+    const response = await AxiosHook(true, API_ENDPOINTS.getUpdateLoggedUser, 'GET', null)
     if (response?.status == 200) {
       setUser(response.data)
     }
@@ -28,6 +28,8 @@ export const IsVerifiedAccountHook = () => {
     } else if (!user?.email) {
       return <Navigate to='/login' />
     }
+  }else{
+    return null
   }
 
 }

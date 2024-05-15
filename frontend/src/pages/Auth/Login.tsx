@@ -58,7 +58,7 @@ export const Login = () => {
     if (response.status === 200) {
       notify('logged in successfully', 'success')
       localStorage.setItem('authTokens', JSON.stringify(response?.data))
-      window.location.href = '/todos'
+      window.location.href = '/'
     } else if (response.status == 401) {
       notify('Email or Password is incorrect', 'error')
     } else {
