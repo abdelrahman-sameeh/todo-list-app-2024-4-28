@@ -1,5 +1,4 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
-
 import uploadImage from '../../static/image/upload.jpg'
 import { useAuth } from '../../context/AuthContext'
 import { useEffect, useState } from 'react'
@@ -10,14 +9,13 @@ import { notify } from '../../components/utils/Notify'
 
 export const ProfilePage = () => {
 
-
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [image, setImage] = useState<any>(uploadImage)
-  const [selectedFile, setSelectedFile] = useState<any>(null)
+  const [file, setFile] = useState<any>(null)
   const [errors, setErrors] = useState<Map<string, string>>(new Map())
 
-  const { user }: any = useAuth()
+  const { user, setUser }: any = useAuth()
   const navigate = useNavigate()
 
 
@@ -38,25 +36,58 @@ export const ProfilePage = () => {
   const handleUpdate = async (e: any) => {
     e.preventDefault()
 
-    if (name == user.name && email == user.email && image == user.profile_picture) {
+    if (name == user.name && email == user.email && file == null) {
       return false
     }
 
+
     const formData = new FormData()
-    formData.append('name', name)
-    formData.append('email', email)
-    formData.append('profile_picture', selectedFile == null || selectedFile == 'delete' ? '' : selectedFile)
+
+    if (name != user.name) {
+      formData.append('name', name)
+    }
+    if (email != user.email) {
+      formData.append('email', email)
+    }
+    if (image != user.profile_picture) {
+      formData.append(
+        'profile_picture',
+        (file == 'delete' || file == null) && !image.startsWith('blob') ? '' : file
+      )
+    }
 
     const response = await AxiosHook(true, API_ENDPOINTS.getUpdateLoggedUser, 'PUT', formData, 'multipart/form-data')
-    
-    if(response.status==200){
-      notify('Upload successfully', 'success')
-    }else{
-      notify('Something went wrong', 'error')
+
+    if (response.status == 200) {
+      notify('updated successfully', 'success')
+      setUser(response.data)
+    } else {
+      if (response?.data?.email[0]?.startsWith('user with this email already exists.')) {
+        notify('this email already used', 'error')
+      }
+      else {
+        notify('Something went wrong', 'error')
+      }
     }
 
   }
 
+  const handleChangeImage = (e: any) => {
+    errors.has('image') && errors.delete('image')
+    if (e.target.files && e.target.files[0]) {
+      if (!e.target.files[0].type.startsWith('image')) {
+        setErrors(new Map(errors).set('image', 'Invalid image'))
+        return
+      }
+      if (e.target.files[0].size > 1000 * 5000) {
+        setErrors(new Map(errors).set('image', 'Only accept image size less than 5MB'))
+        return
+      }
+      setImage(URL.createObjectURL(e.target.files[0]))
+      setFile(e.target.files[0])
+    }
+    e.target.value = ''
+  }
 
 
   return (
@@ -66,40 +97,23 @@ export const ProfilePage = () => {
           <label htmlFor="inputImg">
             <img style={{ height: '200px', objectFit: 'contain', cursor: 'pointer' }} src={image ? image : uploadImage} alt="user image" />
           </label>
-          <input onChange={(e: any) => {
-            errors.has('image') && errors.delete('image')
-            if (e.target.files && e.target.files[0]) {
-              if (!e.target.files[0].type.startsWith('image')) {
-                setErrors((prev: any) => (new Map().set('image', 'Invalid image')))
-                return
-              }
-              if (+e.target.files[0].size > 5000 * 1000) {
-                setErrors((prev: any) => (new Map().set('image', 'Only accept image less than 5MB')))
-                return
-              }
-            }
-            if (e.target.files && e.target.files[0]) {
-              setSelectedFile(e.target.files[0])
-              setImage(URL.createObjectURL(e.target.files[0]))
-            }
-            e.target.value = null
-          }} id={'inputImg'} type="file" hidden />
-          <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }} >
-            {
-              image != null && image != uploadImage &&
+          <input onChange={handleChangeImage} id={'inputImg'} type="file" hidden />
+
+          {
+            image && image != uploadImage ?
+
               <Button
                 onClick={() => {
-                  setSelectedFile('delete')
+                  setFile('delete')
                   setImage(uploadImage)
                 }}
-                variant='contained' color={'error'} > delete </Button>
-            }
-
-          </div>
+                variant='contained' color={'error'} >
+                delete
+              </Button>
+              : null
+          }
           <Typography sx={{ fontSize: '16px', color: 'red', my: 1 }} >
-            {
-              errors?.has('image') && errors.get('image')
-            }
+            {errors.has('image') && errors.get('image')}
           </Typography>
         </Box>
 
@@ -125,6 +139,6 @@ export const ProfilePage = () => {
       </form>
 
 
-    </Container>
+    </Container >
   )
 }
